@@ -7,7 +7,6 @@ public class ScreenManager : MonoBehaviour {
 	private EventManagerBase mEventManagerBase;
 	// Use this for initialization
 	void Start () {
-		mEventManagerBase = GetPublicObjects.mScriptHolder.GetComponent<EventManagerBase> ();
 	}
 	
 	// Update is called once per frame
@@ -57,11 +56,11 @@ public class ScreenManager : MonoBehaviour {
 	{
 		if (screenname.Equals ("Home")) 
 		{
-			mEventManagerBase.TriggerHomeScreenLoaded ();
+			GetPublicObjects.mScriptHolder.GetComponent<EventManagerBase> ().TriggerHomeScreenLoaded ();
 		}
 		else if (screenname.Equals ("Lecture")) 
 		{
-			mEventManagerBase.TriggerLectureScreenLoaded();
+			GetPublicObjects.mScriptHolder.GetComponent<EventManagerBase> ().TriggerLectureScreenLoaded();
 		}
 	}
 }

@@ -1,1 +1,0 @@
-Web site should be implemented inside this folder. Commit to your relavant branch at all times.

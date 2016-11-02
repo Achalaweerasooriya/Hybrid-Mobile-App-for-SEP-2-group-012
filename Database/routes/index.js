@@ -81,3 +81,70 @@ router.get('/get/v1/getEmployeeDetails', function(req, res, next) {
         return next(ex);
     }
 });
+
+/*Get available lectures*/
+router.get('/get/AvailableLec', function(req, res, next) {
+    try {
+            
+                  /*var query = url.parse(req.url,true).query;
+                  console.log(query);
+        var roleId = query.roleId;
+        var deptId = query.deptId;*/
+        //console.log(roleId);
+        //console.log(deptId);
+        req.getConnection(function(err, conn) {
+            if (err) {
+                console.error('SQL Connection error: ', err);
+                return next(err);
+            } else {
+                conn.query('select li.ilid from lecture_instance li', function(err, rows, fields) {
+                    if (err) {
+                        console.error('SQL error: ', err);
+                        return next(err);
+                    }
+                    var resEmp = [];
+                    for (var empIndex in rows) {
+                        var empObj = rows[empIndex ];
+                        resEmp .push(empObj);
+                    }
+                    res.json(resEmp);
+                });
+            }
+        });
+    } catch (ex) {
+        console.error("Internal error:" + ex);
+        return next(ex);
+    }
+});
+
+
+/*Get enrollment key*/
+router.get('/get/EnrollKey', function(req, res, next) {
+    try {
+            
+            var lecId = req.param('lecId');
+
+        req.getConnection(function(err, conn) {
+            if (err) {
+                console.error('SQL Connection error: ', err);
+                return next(err);
+            } else {
+                conn.query('select li.enroll from lecture_instance li where ilid = ? ', [lecId], function(err, rows, fields) {
+                    if (err) {
+                        console.error('SQL error: ', err);
+                        return next(err);
+                    }
+                    var resEmp = [];
+                    for (var empIndex in rows) {
+                        var empObj = rows[empIndex ];
+                        resEmp .push(empObj);
+                    }
+                    res.json(resEmp);
+                });
+            }
+        });
+    } catch (ex) {
+        console.error("Internal error:" + ex);
+        return next(ex);
+    }
+});

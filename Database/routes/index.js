@@ -80,73 +80,6 @@ router.get('/get/v1/getEmployeeDetails', function(req, res, next) {
     }
 });
 
-/*Get available lectures*/
-router.get('/get/AvailableLec', function(req, res, next) {
-    try {
-            
-                  /*var query = url.parse(req.url,true).query;
-                  console.log(query);
-        var roleId = query.roleId;
-        var deptId = query.deptId;*/
-        //console.log(roleId);
-        //console.log(deptId);
-        req.getConnection(function(err, conn) {
-            if (err) {
-                console.error('SQL Connection error: ', err);
-                return next(err);
-            } else {
-                conn.query('select li.ilid from lecture_instance li', function(err, rows, fields) {
-                    if (err) {
-                        console.error('SQL error: ', err);
-                        return next(err);
-                    }
-                    var resEmp = [];
-                    for (var empIndex in rows) {
-                        var empObj = rows[empIndex ];
-                        resEmp .push(empObj);
-                    }
-                    res.json(resEmp);
-                });
-            }
-        });
-    } catch (ex) {
-        console.error("Internal error:" + ex);
-        return next(ex);
-    }
-});
-
-
-/*Get enrollment key*/
-router.get('/get/EnrollKey', function(req, res, next) {
-    try {
-            
-            var lecId = req.param('lecId');
-
-        req.getConnection(function(err, conn) {
-            if (err) {
-                console.error('SQL Connection error: ', err);
-                return next(err);
-            } else {
-                conn.query('select li.enroll from lecture_instance li where ilid = ? ', [lecId], function(err, rows, fields) {
-                    if (err) {
-                        console.error('SQL error: ', err);
-                        return next(err);
-                    }
-                    var resEmp = [];
-                    for (var empIndex in rows) {
-                        var empObj = rows[empIndex ];
-                        resEmp .push(empObj);
-                    }
-                    res.json(resEmp);
-                });
-            }
-        });
-    } catch (ex) {
-        console.error("Internal error:" + ex);
-        return next(ex);
-    }
-});
-
 /* Create Student Question. */
 router.post('/add/addquestion', function(req,res,next){
     try{
@@ -170,7 +103,7 @@ router.post('/add/addquestion', function(req,res,next){
             console.error('SQL error: ', err);
             return next(err);
         }
-        res.true;
+        return true;
     });
     }
     });
@@ -213,4 +146,142 @@ router.get('/get/getsubjects', function(req, res, next) {
     }
 });
 
+/*get lquestion*/
+router.get('/get/getlquestion', function(req, res, next) {
+    try {
+            
+            var sid = req.param('sid');
 
+        req.getConnection(function(err, conn) {
+            if (err) {
+                console.error('SQL Connection error: ', err);
+                return next(err);
+            } else {
+                conn.query('select qid, json from l_question where sid = ? ', [sid], function(err, rows, fields) {
+                    if (err) {
+                        console.error('SQL error: ', err);
+                        return next(err);
+                    }
+                    var resEmp = [];
+                    for (var empIndex in rows) {
+                        var empObj = rows[empIndex ];
+                        resEmp .push(empObj);
+                    }
+                    res.json(resEmp);
+                });
+            }
+        });
+    } catch (ex) {
+        console.error("Internal error:" + ex);
+        return next(ex);
+    }
+});
+
+
+
+/* Enroll student */
+router.post('/add/enroll', function(req,res,next){
+    try{
+        var reqObj = req.body;        
+        console.log(reqObj);      
+        req.getConnection(function(err, conn){
+    if(err)
+    {
+        console.error('SQL Connection error: ', err);
+        return next(err);
+    }
+    else
+    {
+        var insertSql = "INSERT INTO enrollment SET ?";
+        var insertValues = {
+        "s_id" : reqObj.s_id,
+        "sid" : reqObj.sid
+    };
+        var query = conn.query(insertSql, insertValues, function (err, result){
+        if(err){
+            console.error('SQL error: ', err);
+            return next(err);
+        }
+
+var question_ID = result.insertId;
+res.json({"val":"true"});
+    });
+    }
+    });
+    }
+    catch(ex){
+    console.error("Internal error:"+ex);
+    return next(ex);
+    }
+});
+
+// Add lecturer question
+router.post('/add/question', function(req,res,next){
+try{
+var reqObj = req.body;        
+console.log(reqObj);
+req.getConnection(function(err, conn){
+if(err)
+{
+console.error('SQL Connection error: ', err);
+return next(err);
+}
+else
+{
+var insertSql = "INSERT INTO  l_question SET ?";
+var insertValues = {
+"json" : reqObj.question,
+"sid" : reqObj.subject_id
+};
+var query = conn.query(insertSql, insertValues, function (err, result){
+if(err){
+console.error('SQL error: ', err);
+return next(err);
+}
+var question_ID = result.insertId;
+res.json({"question_ID":question_ID});
+});
+}
+});
+}
+catch(ex){
+console.error("Internal error:"+ex);
+return next(ex);
+}
+});
+
+
+// Unenroll student
+router.post('/add/unenroll', function(req,res,next){
+try{
+var reqObj = req.body;        
+console.log(reqObj);
+req.getConnection(function(err, conn){
+if(err)
+{
+console.error('SQL Connection error: ', err);
+return next(err);
+}
+else
+{
+var insertSql = "INSERT INTO  l_question SET ?";
+var insertValues = {
+"json" : reqObj.question,
+"sid" : reqObj.subject_id
+};
+var query = conn.query(insertSql, insertValues, function (err, result){
+if(err){
+console.error('SQL error: ', err);
+return next(err);
+}
+var question_ID = result.insertId;
+res.json({"question_ID":question_ID});
+});
+}
+});
+}
+catch(ex){
+console.error("Internal error:"+ex);
+return next(ex);
+}
+});

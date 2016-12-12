@@ -6,6 +6,7 @@ public class EventManagerBase : MonoBehaviour {
 	public delegate void OnEvent();
 	public static event OnEvent OnHomeScreenLoaded;
 	public static event OnEvent OnLectureScreenLoaded;
+	public static event OnEvent OnLectureMaterialsLoaded;
 	void Start () {
 	
 	}
@@ -25,5 +26,11 @@ public class EventManagerBase : MonoBehaviour {
 	{
 		if (OnLectureScreenLoaded != null)
 			OnLectureScreenLoaded ();
+	}
+
+	public void TriggerLectureMaterialsLoaded()
+	{
+		if (OnLectureMaterialsLoaded != null)
+			OnLectureMaterialsLoaded ();
 	}
 }

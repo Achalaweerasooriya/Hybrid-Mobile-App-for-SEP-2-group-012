@@ -20,4 +20,5 @@ public class DisplayDetails : MonoBehaviour {
 		Debug.Log (AppCommon.mSubjectName);
 		mSubjectName.text = AppCommon.mSubjectName;
 	}
+		
 }

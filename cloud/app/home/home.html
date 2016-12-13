@@ -619,8 +619,8 @@ Rice <i class="fa fa-fw fa-caret-down"></i></a>
     datasource="{{myDataSource2}}"
 ></fusioncharts></center>
 <a ng-click="testhttp()" >asdasdsadsa</a>
-    
-  <md-content>
+   </div> 
+ <!--  <md-content>
     <md-tabs md-dynamic-height md-border-bottom>
     <span ng-repeat="questions in selected_questions track by $index" >
       <md-tab label={{questions.questionNo}}  >
@@ -648,8 +648,8 @@ Rice <i class="fa fa-fw fa-caret-down"></i></a>
    
    
     </md-tabs>
-  </md-content>
-</div>
+  </md-content> -->
+
 <!-- 
   graphs -->
 <!--  id="SaveAnnouncements"  ng-if="checkBodyAnnouncements()" -->
@@ -661,8 +661,7 @@ Rice <i class="fa fa-fw fa-caret-down"></i></a>
 
 <div ng-cloak  ng-show="_quiz_show_answers" style="border: 2px dashed red;" >
 <div ng-cloak  ng-show="_quiz_show_answers_ongoing" ><h3> Ongoing quiz for {{show_ongoing}}</h3>
-
- <md-button class="md-raised md-primary" ng-click="getResults()" style="float:right" ><i class="fa fa-newspaper-o" aria-hidden="true"></i>  Get Results </md-button></div>
+</div>
 <h3>Preview</h3>
   <md-content>
     <md-tabs md-dynamic-height md-border-bottom>
@@ -678,6 +677,10 @@ Rice <i class="fa fa-fw fa-caret-down"></i></a>
 <p>3) {{questions.answers.answer_3}}</p></br>
 <p>4) {{questions.answers.answer_4}}</p></br>
 
+
+
+ <center><md-button class="md-raised md-primary" ng-click="getResults(questions)"  ><i class="fa fa-newspaper-o" aria-hidden="true"></i>  Get Results </md-button>
+ </center>
              </md-content>
       </md-tab>
       </span>

@@ -45,10 +45,90 @@ $rootScope.messages_question_count =0;
 *gert results
 *
 */
-$scope.getResults =funtion (){
+$rootScope.return_question_id = [];
+$rootScope.answersr = [];
 
+$scope.getResults =function(item)   {
+  
+ var datai={qid :  item.return_question_id.question_ID};
+
+  
+      $http.post('http://'+global_config+':3000/get/getsanswers', datai)
+                    .success(function(datai, status, headers, config)
+                    {
+                           //console.log("student test");
+                     // $rootScope.messages_question.push(data);
+                    // $rootScope.answersr.push(data);
+                   //  console.log(datai);
+
+var x;
+for(x = 0 ;x<datai.length;x++ ){
+  datai[x].value =datai[x].value +'';
+}
+ $rootScope.dataForgraph = [];
+ $rootScope.dataForgraph = datai;
+                    $rootScope.myDataSource = {
+    chart: {
+        caption: item.questionNo,
+        subCaption:"Report Summary",
+        numbersuffix: " Students",
+        theme: "ocean"
+    },
+    data: $rootScope.dataForgraph
 };
 
+$rootScope.myDataSource2 = {
+    chart: {
+        caption: item.questionNo,
+        subCaption: "Report Summary",
+        startingangle: "120",
+        showlabels: "0",
+        showlegend: "1",
+        enablemultislicing: "0",
+        slicingdistance: "15",
+        showpercentvalues: "1",
+        showpercentintooltip: "0",
+        plottooltext: "$label Total Students : $datavalue",
+        theme: "ocean"
+    },
+    data: $rootScope.dataForgraph
+}
+            $rootScope._graph_show= true;         
+                    })
+                    .error(function(data, status, headers, config)
+                    {
+                        console.log('error');
+                    });
+//  }
+
+
+};
+   $rootScope.myDataSource = {
+    chart: {
+        caption: "Question 1",
+        subCaption: "greatest club?",
+        numbersuffix: " Students",
+        theme: "ocean"
+    },
+    data: $rootScope.dataForgraph
+};
+
+$rootScope.myDataSource2 = {
+    chart: {
+        caption: "Question 1",
+        subcaption: "greatest club?",
+        startingangle: "120",
+        showlabels: "0",
+        showlegend: "1",
+        enablemultislicing: "0",
+        slicingdistance: "15",
+        showpercentvalues: "1",
+        showpercentintooltip: "0",
+        plottooltext: "$label Total Students : $datavalue",
+        theme: "ocean"
+    },
+    data: $rootScope.dataForgraph
+}
 
 /*
 *
@@ -94,70 +174,6 @@ var var_1=$interval(function(){
   //  }
   };
 
-$scope.myDataSource = {
-    chart: {
-        caption: "Question 1",
-        subCaption: "greatest club?",
-        numbersuffix: " Students",
-        theme: "ocean"
-    },
-    data:[{
-        label: "answer 1",
-        value: "10"
-    },
-    {
-        label: "answer 2",
-        value: "5"
-    },
-    {
-        label: "answer 3",
-        value: "3"
-    },
-    {
-        label: "answer 4",
-        value: "8"
-    },
-    {
-        label: "answer 5",
-        value: "1"
-    }]
-};
-
-$scope.myDataSource2 = {
-    chart: {
-        caption: "Question 1",
-        subcaption: "greatest club?",
-        startingangle: "120",
-        showlabels: "0",
-        showlegend: "1",
-        enablemultislicing: "0",
-        slicingdistance: "15",
-        showpercentvalues: "1",
-        showpercentintooltip: "0",
-        plottooltext: "$label Total Students : $datavalue",
-        theme: "ocean"
-    },
-    data:[{
-        label: "answer 1",
-        value: "10"
-    },
-    {
-        label: "answer 2",
-        value: "5"
-    },
-    {
-        label: "answer 3",
-        value: "3"
-    },
-    {
-        label: "answer 4",
-        value: "8"
-    },
-    {
-        label: "answer 5",
-        value: "1"
-    }]
-}
 
 
 $scope.data={};
@@ -2172,19 +2188,7 @@ old
                                                              //$rootScope.quizw(id);
                                                             console.log(idx);
 
-var object_question = {
-  questionNo : $rootScope.coount_id_quiz_questionnaire,
-  qustion : $rootScope.quill2.root.innerHTML,
-  answers : list,
-  correct_answers :  $scope.selected_checkbox,
-  Lec_Id : JSON.parse( localStorage.getItem("userId") ),
-  Lec_Email : JSON.parse( localStorage.getItem("userEmail") ),
-  Lec_Ename : JSON.parse( localStorage.getItem("userName") ),
-  subject :  $rootScope.itemForAnnouncement
-}
-                                                           $scope.selected_questions.push(object_question);
-                                                              console.log("asdsad");
-                                                              console.log(object_question);
+
                                                             //       console.log($rootScope.quill2.root.innerHTML);
 
 //http dbhttp://localhost:8080/phpmyadmin/
@@ -2212,11 +2216,27 @@ var db_sent_question = {
   answer4 :list.answer_4
 } 
 
-                        $http.post('http://pc:3000/add/lquestion',db_sent_question)
+                        $http.post('http://'+global_config+':3000/add/lquestion',db_sent_question)
                                                                 .success(function(data, status, headers, config)
                                                                 {
-                                                                   console.log("question added");
-                                                                  
+                                                                   //console.log("question added");
+                                                                  $rootScope.return_question_id.push(data);
+
+
+                                                                  var object_question = {
+  questionNo : $rootScope.coount_id_quiz_questionnaire,
+  qustion : $rootScope.quill2.root.innerHTML,
+  answers : list,
+  correct_answers :  $scope.selected_checkbox,
+  Lec_Id : JSON.parse( localStorage.getItem("userId") ),
+  Lec_Email : JSON.parse( localStorage.getItem("userEmail") ),
+  Lec_Ename : JSON.parse( localStorage.getItem("userName") ),
+  subject :  $rootScope.itemForAnnouncement,
+  return_question_id : data
+}
+                                                           $scope.selected_questions.push(object_question);
+                                                              console.log("asdsad");
+                                                              console.log(object_question);
 
                                                                 })
                                                                 .error(function(data, status, headers, config)

@@ -19,7 +19,7 @@ app.use(connection(mysql,{
    host     : 'localhost',
    user     : 'root',
    password : '',
-   database : 'rest_api_test'
+   database : 'sep2'
 
  },'request'));
 

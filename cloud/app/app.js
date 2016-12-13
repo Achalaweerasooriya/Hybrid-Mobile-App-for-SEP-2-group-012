@@ -21,7 +21,8 @@ angular.module('myApp', [
   'myApp.register',
   'myApp.view1',
   'myApp.view2',
-  'myApp.version'
+  'myApp.version',
+  'myApp.admin'
 ]).
 config(['$locationProvider', '$routeProvider','$mdThemingProvider','flowFactoryProvider',  function($locationProvider, $routeProvider,$mdThemingProvider,flowFactoryProvider) {
    $routeProvider.when('/home', {
@@ -30,7 +31,34 @@ config(['$locationProvider', '$routeProvider','$mdThemingProvider','flowFactoryP
         });
         $routeProvider.when('/', {
             templateUrl: './home/home.html',
-            controller: 'homeCtrl',
+            controller: 'homeCtrl',            
+        });
+        $routeProvider.when('/admin', {
+            templateUrl: './admin/admin.html',
+            controller: 'adminCtrl',
+        });$routeProvider.when('/addLec', {
+            templateUrl: './admin/addLec.html',
+            controller: 'adminCtrl',
+        });
+    $routeProvider.when('/editLec', {
+            templateUrl: './admin/editLec.html',
+            controller: 'adminCtrl',
+        });
+    $routeProvider.when('/singleLec', {
+            templateUrl: './admin/singleLec.html',
+            controller: 'adminCtrl',
+        });
+     $routeProvider.when('/manageCourses', {
+            templateUrl: './admin/addCourse.html',
+            controller: 'courseCtrl',
+        });
+     $routeProvider.when('/editCourse', {
+            templateUrl: './admin/editCourse.html',
+            controller: 'courseCtrl',
+        });     
+      $routeProvider.when('/singleCourse', {
+            templateUrl: './admin/singleCourse.html',
+            controller: 'courseCtrl',
         });
         $routeProvider.when('/login', {
             templateUrl: './login/login.html',

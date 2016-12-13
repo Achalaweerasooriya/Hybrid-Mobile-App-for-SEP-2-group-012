@@ -7,6 +7,7 @@ $key = $request->key;
 
 		$sql = "SELECT * FROM `lecturers` WHERE `lecName` LIKE '%".$key."%' ";
 
+		
 		$result = $connection->query($sql);
 
 		if ($result->num_rows > 0) 
@@ -20,7 +21,7 @@ $key = $request->key;
 					      	'lecId' => $row['lecId'],
 					      	'lecName' => $row['lecName'],
 					         'email' => $row['lecEmail'],
-					        'dept' => $row['lecDept']
+					        
 					    				 
 					    );
 

@@ -25,7 +25,7 @@ admin.controller('adminCtrl', function($scope,$mdDialog, $mdMedia,$rootScope,$ht
                 $location.path('/manageCourses');
               }
 
-                       // $http.post('backend/RegisterLecturer.php', datai)
+                       // $http.post('backend/RegisterLecturer.php', datai)`
               
                     
                     
@@ -38,10 +38,12 @@ admin.controller('adminCtrl', function($scope,$mdDialog, $mdMedia,$rootScope,$ht
                           {
                             'name' : $scope.name,
                             'email' : $scope.email,
-                            'dept' : $scope.dept
+                            'password' : $scope.password
+                            
                           };
 
                           $http.post('backend/RegisterLecturer.php', newlec)
+                                                      
 
                            .success(function(data, status, headers, config)
                               {
@@ -92,7 +94,7 @@ admin.controller('adminCtrl', function($scope,$mdDialog, $mdMedia,$rootScope,$ht
                                     $scope.showAlert();   
 
 
-                              });
+                           //    });
 
                                   $scope.name='';
                                   $scope.email='';
@@ -103,7 +105,9 @@ admin.controller('adminCtrl', function($scope,$mdDialog, $mdMedia,$rootScope,$ht
                           console.log("details " + newlec.email);
 
                           
-                       };
+                       })
+
+                     };
 
 
                        $scope.search=function()
@@ -114,7 +118,7 @@ admin.controller('adminCtrl', function($scope,$mdDialog, $mdMedia,$rootScope,$ht
                           };
                           console.log("search " + searchkey.key);
 
-                           $http.post('backend/searchLec.php',searchkey)
+                           $http.post('backend/SearchLec.php',searchkey)
 
                            .success(function(data, status, headers, config){
                             $scope.lecturers = data;
@@ -138,7 +142,7 @@ admin.controller('adminCtrl', function($scope,$mdDialog, $mdMedia,$rootScope,$ht
                             'lecId': lecturer.lecId,
                             'lecName' : lecturer.lecName,
                             'email' : lecturer.email,
-                            'dept' : lecturer.dept,
+                            'pw' : lecturer.lecPassword,
                              };
 
                         // $rootScope.lec = lecturer;
@@ -254,7 +258,7 @@ admin.controller('adminCtrl', function($scope,$mdDialog, $mdMedia,$rootScope,$ht
 
                                   
 
-                       }
+                       };
 
 
                        //delete the selected lecturer from database
@@ -338,16 +342,32 @@ admin.controller('courseCtrl', function($scope,$mdDialog, $mdMedia,$rootScope,$h
     {
        var  newcourse = 
                           {
-                            'cID' : $scope.cid,
-                            'cName' : $scope.cname,
-                            'dept' : $scope.dept,
-                            'lec' : $scope.lect
+                            'sid' : $scope.sid,
+                            'sname' : $scope.sname,
+                            'year' : $scope.year,
+                            'semester' : $scope.semester,
+                            'enrollmentkey' : $scope.enrollmentkey,
+                            'time' : $scope.time , 
+                            'location' : $scope.location 
                           };
 
-                          $scope.cid=null;
-                          $scope.cname=null;
-                          $scope.dept=null;
-                          $scope.lec=null;
+                          $scope.sid=null;
+                          $scope.sname=null;
+                          $scope.year=null;
+                          $scope.semester=null;
+                          $scope.enrollmentkey = null;
+                          $scope.time = null;
+                          $scope.location = null;
+
+                          // console.log('new is' + newcourse.sid);
+                          // console.log('new is' + newcourse.sname);
+                          // console.log('new is' + newcourse.year);
+                          // console.log('new is' + newcourse.semester);
+                          // console.log('new is' + newcourse.enrollmentkey);
+                          // console.log('new is' + newcourse.time);
+                          // console.log('new is' + newcourse.location);
+
+
 
                           $http.post('backend/saveCourse.php', newcourse)
                           .success(function(data, status, headers, config){
@@ -433,10 +453,13 @@ admin.controller('courseCtrl', function($scope,$mdDialog, $mdMedia,$rootScope,$h
 
 
               $rootScope.c ={ 
-                'cId' : course.cId,
-                'cName' : course.cName,
-                'dept' :course.dept,
-                'lic' : course.lic
+                'id' : course.id,
+                'name' : course.name,
+                'year' :course.year,
+                'semester' : course.semester,
+                'time' : course.time,
+                'location' : course.location,
+                'enrollmentkey' : course.enrollmentkey
 
               };
 

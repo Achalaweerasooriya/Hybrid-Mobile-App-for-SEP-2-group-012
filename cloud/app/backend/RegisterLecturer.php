@@ -5,9 +5,8 @@ $request = json_decode($postdata);
 $name = $request->name;
 $email = $request->email;
 $dept = $request->dept;
-$pw = "password1";
+$pw = $request->password;
 
-echo "backend";
 
 
 //$pass = $request->password;
@@ -15,9 +14,9 @@ $validator = "success" ;
 
  
 
-$sql="INSERT INTO `lecturers` (`lecName`, `lecEmail`, `lecPassword`, `lecDept`) VALUES ('".$name."','".$email."','".$pw."','".$dept."') ";
+$sql="INSERT INTO `lecturers` (`lecName`, `lecEmail`, `lecPassword`) VALUES ('".$name."','".$email."','".$pw."') ";
 
-echo " backend".$email."recived";
+
 
 if ($connection->query($sql) === TRUE) {
     echo "New record created successfully";

@@ -28,9 +28,94 @@ $mdThemingProvider.theme('docs-dark', 'default')
     //flowFactoryProvider.factory = fustyFlowFactory;
 }])
 
-.controller('homeCtrl', function($scope,$mdDialog, $mdMedia,$rootScope,$http,$location,filterFilter,SweetAlert, $sce) {
+.controller('homeCtrl', function($scope,$interval,$mdDialog, $mdMedia,$rootScope,$http,$location,filterFilter,SweetAlert, $sce) {
+
+$scope.showquestion=function(q)
+{
+
+  $rootScope.stduentquestions = {
+                            'sq_id': q.sq_id,
+                            'question' : q.question,
+                            'answer' : q.answer,
+                            'status' : q.status,
+                            'sender' : q.sender,
+
+                             };
+
+                        // $rootScope.lec = lecturer;
+                           
+                        
+                          console.log("seected questions is  "+ $rootScope.stduentquestions.sq_id);
+}
+
+ // $interval(callAtInterval, 20000);
+
+ // function callAtInterval() {
+ //    console.log("Timeout occurred");
 
 
+
+$scope.questions = [
+      {
+        sq_id : '1',
+        question: 'A?',
+        answer: 'no answer',
+        lid: '1',
+        status : 'unread',
+        time : '10.00 AM',
+        sender: 'IT14085154'
+        
+      },
+      { 
+        sq_id : '2',
+        question: 'A?',
+        answer: 'no answer',
+        lid: '1',
+        status : 'unread',
+        time : '10.10 AM',
+        sender: 'IT14016226'
+      }
+];
+
+    $scope.newquestions = $scope.questions.length ;
+
+    console.log($scope.newquestions );
+     
+
+
+
+
+
+
+   $scope.deleteQuestion=function(questions)
+        {
+          console.log("delete finuction");
+          console.log("Delete this " +questions.questionNo);
+
+          var index = $scope.selected_questions.indexOf(questions);
+          console.log("num "+$scope.selected_questions[index+1]);
+
+          
+          
+          
+        //  $scope.selected_questions[index+1].questionNo = $scope.selected_questions[index+1].questionNo -1 ;
+        var i = 0;
+        $scope.temp = [];
+       $rootScope.coount_id_quiz_questionnaire =$rootScope.coount_id_quiz_questionnaire -1;
+       //}
+        $scope.selected_questions.splice($scope.selected_questions.length-1, 1);
+
+        };
+
+        $scope.editQuestion=function(questions)
+        {
+         
+         var q = questions.qustion;
+         $rootScope.quill.setText(q);
+
+          console.log("edit finuction");
+          console.log("edit this qq" +question.questionNo);
+        };
 
 
 $scope.data={};
@@ -843,7 +928,9 @@ $scope.goToRegister = function(){
 };
 
 
-
+$scope.goToAdmin= function(){
+  $location.path('/admin');
+}
 
      
 
@@ -2021,6 +2108,9 @@ $scope.select_All == false;
 
     };      
 
+
+      
+
         $scope.Savelist = function() {
                                                            // console.log($scope.selected);
                           $rootScope.users_announcements = $scope.messages;    
@@ -2099,8 +2189,12 @@ $scope.select_All == false;
                         
                             //prompt
 
+
+       
                          
 };
+
+
 
 
 

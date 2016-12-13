@@ -2,15 +2,18 @@
 require("../dbConnection.php");
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
-$cid = $request->cID;
-$cname=$request->cName;
-$dept=$request->dept;
-$lec=$request->lec;
+$sname=$request->sname;
+$year=$request->year;
+$semester=$request->semester;
+$enrollmentkey=$request->enrollmentkey;
+$time=$request->time;
+$location = $request->location;
+
 
 
 		$validator = "success";
 
-		$sql="INSERT INTO `courses` VALUES('".$cid."','".$cname."','".$dept."','".$lec."') ";
+		$sql="INSERT INTO `products`(`name`,`year`,`semester`,`time`,`location`,`enrollmentkey`) VALUES('".$sname."','".$year."','".$semester."' ,  '".$time."' , '".$location."' ,'".$enrollmentkey."') ";
 
 		// $result = $connection->query($sql);
 

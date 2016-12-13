@@ -6,7 +6,7 @@ $cname = $request->key;
 
 $validator="success";
 
-$sql="SELECT * FROM `courses` WHERE `courseId` LIKE '%".$cname."%' ";
+$sql="SELECT `id`,`name` , `year` ,`semester` , `time` , `location` , `enrollmentkey` FROM `products` WHERE `name` LIKE '%".$cname."%' ";
 
 $result = $connection->query($sql);
 
@@ -20,10 +20,15 @@ if ($result->num_rows > 0)
 			 {
 				   $validator = 'success' ;
 		    		$returndata[] = array(
-					      	'cId' => $row['courseId'],
-					      	'cName' => $row['courseName'],
-					         'lic' => $row['lecInCharge'],
-					        'dept' => $row['courseDept']
+		    				'id' => $row['id'],					      	
+					      	'name' => $row['name'],
+					      	'year' => $row['year'],
+					      	'semester' => $row['semester'],
+					      	'time' =>$row['time'],
+					      	'location' =>$row['location'],
+					      	'enrollmentkey' =>$row['enrollmentkey']
+					         
+					        
 					    				 
 					    );
 

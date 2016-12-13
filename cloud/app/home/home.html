@@ -28,83 +28,35 @@
                                         <i class="fa fa-shopping-cart fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">124</div>
-                                        <div>New Products!</div>
+                                        <div class="huge"></div>
+                                        <div>New Messages!</div>
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
                         </div>
                         </li>
-                        <li class="message-preview">
-                            <a href="#!/">
+                        <li class="message-preview" ng-repeat="q in questions">
+                            <a ng-click="showquestion(q)">
                                 <div class="media">
                                     <span class="pull-left">
                                         <img class="media-object" src="http://placehold.it/50x50" alt="">
                                     </span>
                                     <div class="media-body">
-                                    <div ng-if="userDetails.name = undifined"></div>
-                                        <h5 class="media-heading"><strong>John Smith</strong>
+                                    <div></div>
+                                        <h5 class="media-heading"><strong>Question {{q.sq_id}}</strong>
                                         </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                        <p class="small text-muted">Sent by : {{q.sender}}</p>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> {{q.time}}</p>
+                                        <p>{{q.question}}</p>
                                     </div>
                                 </div>
                             </a>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#!/">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
                         <li class="message-footer">
                             <a href="#!/">Read All New Messages</a>
                         </li>
                     </ul>
                 </li>
-                <li class="dropdown">
-                    <a href="#!/" class="dropdown-toggle " data-toggle="dropdown"><i class="fa fa-bell "></i> <b class="caret"></b></a>
-                    <ul class="dropdown-menu alert-dropdown">
-                        <li>
-                            <a href="#!/">Alert Name <span class="label label-default">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#!/home">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">View All</a>
-                        </li>
-                    </ul>
-                </li>
+                
                 <li class="dropdown">
                     <a  class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-user"></i> {{user.name}}<b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -221,6 +173,8 @@ Rice <i class="fa fa-fw fa-caret-down"></i></a>
            
 <li><md-button class="md-raised" ng-click="goToLogin()"><i class="fa fa-sign-in" aria-hidden="true"></i> LOGIN</md-button></li>
 <li><md-button class="md-raised" ng-click="goToRegister()"><i class="fa fa-user" aria-hidden="true"></i> SIGN-UP</md-button></li>
+<li><md-button class="md-raised" ng-click="goToAdmin()"><i class="fa fa-user" aria-hidden="true"></i> ADMIN</md-button></li>
+
                                                            
                                                             
                                                         </ul>
@@ -486,6 +440,8 @@ Rice <i class="fa fa-fw fa-caret-down"></i></a>
 <p>3) {{questions.answers.answer_3}}</p></br>
 <p>4) {{questions.answers.answer_4}}</p></br>
 
+
+
              </md-content>
       </md-tab>
       </span>
@@ -629,6 +585,9 @@ Rice <i class="fa fa-fw fa-caret-down"></i></a>
 
     </div>
 <!--  id="SaveAnnouncements"  ng-if="checkBodyAnnouncements()" -->
+
+
+
        <div  >        
    <pagination page="currentPage" max-size="noOfPages" total-items="totalItems" items-per-page="entryLimit"></pagination>
 </div> 

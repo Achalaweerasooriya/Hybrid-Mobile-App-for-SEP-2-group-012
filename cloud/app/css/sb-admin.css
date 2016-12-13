@@ -23,6 +23,13 @@ body {
   
   
 }
+footer {
+    position: fixed;
+    height: 100px;
+    bottom: 0;
+    width: 100%;
+}
+
 .tabsdemoDynamicHeight md-content {
   background-color: transparent !important; }
   .tabsdemoDynamicHeight md-content md-tabs {

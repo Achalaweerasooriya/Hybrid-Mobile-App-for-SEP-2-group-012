@@ -13,6 +13,7 @@ angular.module('myApp', [
   'ngSanitize',
   'flow',/*
   'ngQuill',*/
+  'ng-fusioncharts',
   'myApp.home',
   'myApp.register_confirmation',
   'myApp.navbar',

@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('myApp.home', ['ngRoute','ngMaterial', 'ui.tree','ui.bootstrap','ngMessages','angular.filter','flow','ngSanitize','oitozero.ngSweetAlert'/*'ngQuill'*/])
+angular.module('myApp.home', ['ngRoute','ngMaterial', 'ui.tree','ui.bootstrap','ngMessages',
+  'ng-fusioncharts','angular.filter','flow','ngSanitize','oitozero.ngSweetAlert'/*'ngQuill'*/])
 
 
 .config(['$routeProvider','$mdThemingProvider','flowFactoryProvider', function($routeProvider,$mdThemingProvider,flowFactoryProvider) {
@@ -30,7 +31,87 @@ $mdThemingProvider.theme('docs-dark', 'default')
 
 .controller('homeCtrl', function($scope,$mdDialog, $mdMedia,$rootScope,$http,$location,filterFilter,SweetAlert, $sce) {
 
+ $scope.questions=[];
 
+  $scope.testhttp =function(){
+    var datai={empName : "dasdasdasd",roleId : 1 ,deptId : 2};
+      $http.post('http://localhost:3000/add/v1/createEmployee', datai)
+                    .success(function(data, status, headers, config)
+                    {
+                      console.log(data);
+                     
+                    })
+                    .error(function(data, status, headers, config)
+                    {
+                        console.log('error');
+                    });
+  //  }
+  };
+
+$scope.myDataSource = {
+    chart: {
+        caption: "Question 1",
+        subCaption: "greatest club?",
+        numbersuffix: " Students",
+        theme: "ocean"
+    },
+    data:[{
+        label: "answer 1",
+        value: "10"
+    },
+    {
+        label: "answer 2",
+        value: "5"
+    },
+    {
+        label: "answer 3",
+        value: "3"
+    },
+    {
+        label: "answer 4",
+        value: "8"
+    },
+    {
+        label: "answer 5",
+        value: "1"
+    }]
+};
+
+$scope.myDataSource2 = {
+    chart: {
+        caption: "Question 1",
+        subcaption: "greatest club?",
+        startingangle: "120",
+        showlabels: "0",
+        showlegend: "1",
+        enablemultislicing: "0",
+        slicingdistance: "15",
+        showpercentvalues: "1",
+        showpercentintooltip: "0",
+        plottooltext: "$label Total Students : $datavalue",
+        theme: "ocean"
+    },
+    data:[{
+        label: "answer 1",
+        value: "10"
+    },
+    {
+        label: "answer 2",
+        value: "5"
+    },
+    {
+        label: "answer 3",
+        value: "3"
+    },
+    {
+        label: "answer 4",
+        value: "8"
+    },
+    {
+        label: "answer 5",
+        value: "1"
+    }]
+}
 
 
 $scope.data={};
@@ -869,6 +950,10 @@ console.log(files);
 $rootScope._Share_files_show=false;
 $scope.ShareFiles=function(item){
 $rootScope._Announcements_show=false;
+//$rootScope._Announcements_show=false;
+                                                                    $rootScope._quiz_show_answers =true;
+                                                                    $rootScope._quiz_show_answers_ongoing=true;
+                                                                    $rootScope._quiz_show=false;
                          $rootScope._Share_files_show=true;
                             var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
                             $mdDialog.show({
@@ -1754,20 +1839,38 @@ var object_question = {
                                                               console.log(object_question);
                                                             //       console.log($rootScope.quill2.root.innerHTML);
 
-//http db
+//http dbhttp://localhost:8080/phpmyadmin/
+// To Be saved
+/*var senddata ={question :  JSON.stringify(object_question) , subject_id : $rootScope.itemForAnnouncement.productId}
+                                    $http.post('http://pc:3000/add/question',senddata)
+                                                                .success(function(data, status, headers, config)
+                                                                {
+                                                                   console.log("question addedsadsad");
+                                                                  
+
+                                                                })
+                                                                .error(function(data, status, headers, config)
+                                                                {
+                                                                    console.log('error');
+                                                                });*/
 
 
-                                                                     SweetAlert.swal("Successfully saved!", "", "success");
+                                                                     SweetAlert.swal("Successfully Added!", "", "success");
                                                                      
                                                                      $scope.Announcements_title="";
+
+document.getElementById("answer_1").value = '';
+document.getElementById("answer_2").value = '';
+document.getElementById("answer_3").value = '';
+document.getElementById("answer_4").value = '';
                                                                     $rootScope.quill2.setText('');
                                                                     $scope.selected_checkbox = [];
                                                                     $rootScope._Announcements_show=false;
                                                                     $rootScope._quiz_show_answers =true;
    $rootScope.coount_id_quiz_questionnaire =$rootScope.coount_id_quiz_questionnaire +1;//reset
 
-                                                              console.log("objecr sadasdsa");
-                                                              console.log(  $scope.selected_questions);
+                                                           /*   console.log("objecr sadasdsa");
+                                                              console.log(  $scope.selected_questions);*/
 
                                                              }
                                                                                                                         // var idx = $scope.selected_questions.indexOf(list);
@@ -1795,6 +1898,59 @@ var object_question = {
                                                            // }
                                                           
                                                           };
+
+
+    $scope.toggle_selected_questions_http = function (item, list,id) {
+
+                                                            var length= $scope.selected_questions.length;
+                                                             if($scope.selected_checkbox.length != 0 && $scope.selected_checkbox.length >= 0){
+                                                              SweetAlert.swal("Please add a question ");
+                                                             }
+                                                      
+                                                             else {
+                                                              console.log("http");
+                                                                    $scope.checkBodyquiz =false;
+                                                                     $rootScope._SelectAnswer= false;
+
+                                                            //var idx = $scope.selected_questions.indexOf(list);
+
+var senddata ={question :  JSON.stringify($scope.selected_questions) , subject_id : $rootScope.itemForAnnouncement.productId}
+                              /*      $http.post('http://pc:3000/add/question',senddata)
+                                                                .success(function(data, status, headers, config)
+                                                                {
+                                                                   console.log("question addedsadsad");
+                                                                  
+
+                                                                })
+                                                                .error(function(data, status, headers, config)
+                                                                {
+                                                                    console.log('error');
+                                                                });*/
+
+
+                                                                     SweetAlert.swal("Successfully Published!", "", "success");
+                                                                     
+                                                                     $scope.Announcements_title="";
+
+document.getElementById("answer_1").value = '';
+document.getElementById("answer_2").value = '';
+document.getElementById("answer_3").value = '';
+document.getElementById("answer_4").value = '';
+                                                                    $rootScope.quill2.setText('');
+                                                                    $scope.selected_checkbox = [];
+                                                                    $rootScope._Announcements_show=false;
+                                                                    $rootScope._quiz_show_answers =true;
+                                                                    $rootScope._quiz_show_answers_ongoing=true;
+                                                                    $scope.show_ongoing=$rootScope.itemForAnnouncement.productName;
+                                                                    $rootScope._quiz_show=false;
+   $rootScope.coount_id_quiz_questionnaire =$rootScope.coount_id_quiz_questionnaire +1;
+
+                                                             }
+                                                          
+                                                          };
+
+
+
                                                           $scope.selected_questions_exists = function (item, list) {
                                                             return list.indexOf(item) > -1;
                                                           };

@@ -4,11 +4,14 @@ using UnityEngine.UI;
 using MaterialUI;
 public class EnrollingDialogBoxHandler : MonoBehaviour {
 
+	/*Public variables*/
 	public Text mEnrolmentKeyValue;
 	public Text mMessage;
 	public GameObject mEnrolmentKeyInputField;
 	public GameObject mOkButton;
 	public GameObject mEnrolmentDialogBox;
+
+	/*Private Variables*/
 	private string mSubjectName;
 	private string mLecturerName;
 	private string mTime;
@@ -25,6 +28,7 @@ public class EnrollingDialogBoxHandler : MonoBehaviour {
 	
 	}
 
+	/*Create the enrolment message and display*/
 	public void DisplayDetails(string SubjectName, string LecturerName, string Location,string lTime,string enrol, string sessionID)
 	{
 		mSubjectName = SubjectName;
@@ -38,6 +42,7 @@ public class EnrollingDialogBoxHandler : MonoBehaviour {
 		mOkButton.SetActive (true);
 	}
 
+	/*Gets enrolment key input and calls method to validate*/
 	public void VerifyEnrolment()
 	{
 		string key = mEnrolmentKeyValue.text;
@@ -48,10 +53,9 @@ public class EnrollingDialogBoxHandler : MonoBehaviour {
 		StartCoroutine (ValidateEnrolmentKey(key));
 	}
 
+	/*Enrol student to the selected lecture*/
 	private IEnumerator ValidateEnrolmentKey(string key)
 	{
-		
-
 		SetDetailsOfAppCommon ();
 		if (key.Equals(mSubjectEnrolmentKey)) {
 			WWWForm form = new WWWForm ();
@@ -66,7 +70,7 @@ public class EnrollingDialogBoxHandler : MonoBehaviour {
 				mEnrolmentKeyInputField.GetComponent<InputField> ().text = "";
 				mEnrolmentDialogBox.SetActive (false);
 				GetPublicObjects.mScriptHolder.GetComponent<ScreenManager> ().SetScreen ("Lecture");
-				GetPublicObjects.mScriptHolder.GetComponent<DisplayDetails> ().SetDemo ();
+				GetPublicObjects.mScriptHolder.GetComponent<DisplayDetails> ().SetDetails ();
 			}
 			else 
 			{
@@ -83,6 +87,7 @@ public class EnrollingDialogBoxHandler : MonoBehaviour {
 		yield return new WaitForSeconds (0.5f);
 	}
 
+	/*Set common details for easy access*/
 	private void SetDetailsOfAppCommon()
 	{
 		AppCommon.mLecturerName = mLecturerName;
@@ -92,6 +97,7 @@ public class EnrollingDialogBoxHandler : MonoBehaviour {
 		AppCommon.mInstanceID = mSessionID;
 	}
 
+	/*Close dialogbox on x click*/
 	public void CloseDialogBox()
 	{
 		mEnrolmentDialogBox.SetActive (false);

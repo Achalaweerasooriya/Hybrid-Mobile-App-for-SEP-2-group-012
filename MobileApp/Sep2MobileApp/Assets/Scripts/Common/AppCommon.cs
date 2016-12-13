@@ -3,7 +3,7 @@ using System.Collections;
 
 public class AppCommon : MonoBehaviour {
 
-	public static string mCommonUrl = "http://pc:3000/";
+	public static string mCommonUrl = "http://192.168.1.2:3000/"; //"http://192.168.1.4:3000/" //http://pc:3000/
 	public static string mSubjectName;
 	public static string mLecturerName;
 	public static string mTime;
@@ -20,6 +20,7 @@ public class AppCommon : MonoBehaviour {
 
 	}
 
+	/*Reset global data*/
 	public static void Reset()
 	{
 		mSubjectName = "";

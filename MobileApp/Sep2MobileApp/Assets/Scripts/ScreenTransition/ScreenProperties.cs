@@ -14,6 +14,7 @@ public class ScreenProperties : MonoBehaviour {
 	
 	}
 
+	/*Return creen name*/
 	public string GetScreenName()
 	{
 		return mScreenName;

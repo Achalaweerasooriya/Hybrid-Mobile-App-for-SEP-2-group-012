@@ -18,7 +18,7 @@ public class ScreenManager : MonoBehaviour {
 	
 	}
 
-	//CHECK
+	/*Set screen and deactivate other screens*/
 	public void SetScreen(string NxtScreenname)
 	{
 		foreach (GameObject g in mScreens) 
@@ -39,6 +39,7 @@ public class ScreenManager : MonoBehaviour {
 		TriggerScreenLoadEvents (NxtScreenname);
 	}
 
+	/*Handle back event*/
 	private void Back()
 	{
 		string currentscreen = mScreenStack.Pop ().ToString();
@@ -52,6 +53,7 @@ public class ScreenManager : MonoBehaviour {
 			
 	}
 
+	/*Event trigger*/
 	private void TriggerScreenLoadEvents(string screenname)
 	{
 		if (screenname.Equals ("Home")) 
@@ -61,6 +63,14 @@ public class ScreenManager : MonoBehaviour {
 		else if (screenname.Equals ("Lecture")) 
 		{
 			GetPublicObjects.mScriptHolder.GetComponent<EventManagerBase> ().TriggerLectureScreenLoaded();
+		}
+		else if (screenname.Equals ("Lecture Materials")) 
+		{
+			GetPublicObjects.mScriptHolder.GetComponent<EventManagerBase> ().TriggerLectureMaterialsLoaded ();
+		}
+		else if (screenname.Equals ("SpotTest")) 
+		{
+			GetPublicObjects.mScriptHolder.GetComponent<EventManagerBase> ().TriggerSpotTestLoaded();
 		}
 	}
 }

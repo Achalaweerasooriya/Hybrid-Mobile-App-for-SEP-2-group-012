@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using LitJson;
 public class Login : MonoBehaviour {
 
-
+	private JsonData jsonvale;
 	public Text mUsername;
-	public Text mPassword;
-	private bool mIsLogged = false;
-	public 
+	public InputField mPassword;
+	public GameObject mScriptHolder;
+
 	// Use this for initialization
 	void Start () 
 	{
-		
+		LoginPageDisplay ();
 	}
 	
 	// Update is called once per frame
@@ -19,9 +20,10 @@ public class Login : MonoBehaviour {
 	
 	}
 
+	/*Validate which page to display*/
 	private void LoginPageDisplay()
 	{
-		if (PlayerPrefs.GetInt ("LoggedIn") == 0) 
+		if (PlayerPrefs.GetInt ("SLIITLoggedIn") == 0) 
 		{
 			GameObject.Find ("ScriptHolder").GetComponent<ScreenManager> ().SetScreen ("Login");
 		} 
@@ -33,40 +35,52 @@ public class Login : MonoBehaviour {
 
 	}
 
-
+	/*Set player prefs for one time login*/
 	public void LoginUser()
 	{
-		PlayerPrefs.SetString ("UID", mUsername.text);
-		PlayerPrefs.SetString ("PWD", mUsername.text);
+		PlayerPrefs.SetString ("SLIITUID", mUsername.text);
+		PlayerPrefs.SetString ("SLIITPWD", mPassword.text);
+		Debug.Log ("uname "+PlayerPrefs.GetString("SLIITUID") + " pwd "+ PlayerPrefs.GetString("SLIITPWD"));
 		StartCoroutine (Log ());
 	}
 
+	/*Validate user with the database*/
 	private IEnumerator Log()
 	{
 		//TODO complete method with url
 		WWWForm form = new WWWForm ();
-		form.AddField ("s_id",PlayerPrefs.GetString("UID"));
-		form.AddField ("sid",PlayerPrefs.GetString("PWD"));
-		string url = AppCommon.mCommonUrl + "add/enroll";
+		form.AddField ("username",PlayerPrefs.GetString("SLIITUID"));
+		form.AddField ("password",PlayerPrefs.GetString("SLIITPWD"));
+		string url = AppCommon.mCommonUrl + "add/login";
 		WWW www = new WWW (url,form);
 		yield return www;
 
 		if (www.error == null) {
-			PlayerPrefs.SetInt("LoggedIn",1);
-			yield return new WaitForSeconds (0.5f);
-			GameObject.Find ("ScriptHolder").GetComponent<ScreenManager> ().SetScreen ("Home");
+
+			Processjson (www.text);
+			PlayerPrefs.SetInt("SLIITLoggedIn",1);
+			AppCommon.mStudentID = jsonvale[0]["s_id"].ToString();
+			mScriptHolder.GetComponent<ScreenManager> ().SetScreen ("Home");
 		} 
-		else 
+		else
 		{
 			//TODO do something
 		}
 	}
 
+	/*Clears playerprefs and reset data*/
 	public void LogOut()
 	{
 		AppCommon.Reset();
-		PlayerPrefs.SetInt("LoggedIn",0);
-		PlayerPrefs.SetString ("UID", "");
-		PlayerPrefs.SetString ("PWD", "");
+		PlayerPrefs.SetInt("SLIITLoggedIn",0);
+		PlayerPrefs.SetString ("SLIITUID", "");
+		PlayerPrefs.SetString ("SLIITPWD", "");
+		mScriptHolder.GetComponent<ScreenManager> ().SetScreen ("Login");
+	}
+
+	private bool Processjson(string jsonString)
+	{
+		jsonvale = JsonMapper.ToObject(jsonString);
+		return true;
 	}
 }

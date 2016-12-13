@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 using MaterialUI;
 public class SearchSubjectPrefabDataLoader : MonoBehaviour {
+
+	/*Private variables*/
 	private string mSubjectName;
 	private string mLecturerName;
 	private string mTime;
@@ -10,6 +12,7 @@ public class SearchSubjectPrefabDataLoader : MonoBehaviour {
 	private string mEnrolmentKey;
 	private string mSessionID;
 
+	/*Public Variables*/
 	public Text mSubject;
 	public Text Lecturer;
 	public Text Location;
@@ -23,6 +26,7 @@ public class SearchSubjectPrefabDataLoader : MonoBehaviour {
 	
 	}
 
+	/*Get details to global variables for easy access and call DisplayDetailsOnPrefab method*/
 	public void SetDetailsOnPrefab(string subject,string lecturer,string time,string location, string enrol, string sessionID)
 	{
 		mSubjectName = subject;
@@ -35,6 +39,7 @@ public class SearchSubjectPrefabDataLoader : MonoBehaviour {
 		DisplayDetailsOnPrefab ();
 	}
 
+	/*Set the details to be displayed on the loaded prefabs*/
 	public void DisplayDetailsOnPrefab()
 	{
 		mSubject = gameObject.transform.FindChild ("SubjectNameText").gameObject.GetComponent<Text> ();
@@ -48,6 +53,7 @@ public class SearchSubjectPrefabDataLoader : MonoBehaviour {
 		Time.text = mTime;
 	}
 
+	/*Display dialog box for enrolling*/
 	public void DisplayEnrollingDialogBox()
 	{
 		GetPublicObjects.mEnrolmentDialogBox.SetActive (true);

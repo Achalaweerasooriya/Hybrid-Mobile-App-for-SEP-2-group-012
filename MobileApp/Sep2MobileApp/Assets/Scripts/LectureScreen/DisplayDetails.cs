@@ -15,9 +15,9 @@ public class DisplayDetails : MonoBehaviour {
 	
 	}
 
-	public void SetDemo()
+	/*Set subject name in display*/
+	public void SetDetails()
 	{
-		Debug.Log (AppCommon.mSubjectName);
 		mSubjectName.text = AppCommon.mSubjectName;
 	}
 		

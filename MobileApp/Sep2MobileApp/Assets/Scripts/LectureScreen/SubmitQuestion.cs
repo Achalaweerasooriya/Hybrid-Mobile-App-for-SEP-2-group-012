@@ -17,14 +17,15 @@ public class SubmitQuestion : MonoBehaviour {
 	
 	}
 
+	/*Pop open input box*/
 	public void AskQuestion()
 	{
 		mQuestionDialogBox.SetActive (true);
 	}
 
+	/*Validate question and call submitthequestion method*/
 	public void SubmitStudentQuestion()
 	{
-		Debug.Log ("quetsion is =" + mQuestion.text);
 		if (mQuestion.text != "") 
 		{
 			StartCoroutine (SubmitTheQuestion ());
@@ -34,20 +35,21 @@ public class SubmitQuestion : MonoBehaviour {
 		}
 	}
 
+	/*Close inputbox on click on x*/
 	public void CloseQuestionDialog()
 	{
 		mQuestionDialogBox.SetActive (false);
-
-		//Application.OpenURL ("<p>ada<span style='color:rgb(230,0,0);'>sasasd</span></p>");
 	}
 
+	/*Post the question to server*/
 	private IEnumerator SubmitTheQuestion()
 	{
 		//TODO complete method with url
 		WWWForm form = new WWWForm ();
-		form.AddField ("s_id",AppCommon.mInstanceID);
-		form.AddField ("sid",mQuestion.text);
-		string url = AppCommon.mCommonUrl + "add/enroll";
+		form.AddField ("question",mQuestion.text);
+		form.AddField ("sid",AppCommon.mInstanceID);
+		form.AddField ("s_id",AppCommon.mStudentID);
+		string url = AppCommon.mCommonUrl + "add/addquestion";
 		WWW www = new WWW (url,form);
 		yield return www;
 

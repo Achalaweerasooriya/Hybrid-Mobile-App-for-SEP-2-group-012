@@ -1,20 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
 using MaterialUI;
+using UnityEngine.UI;
 using LitJson;
 public class HomeScreenLoad : MonoBehaviour {
+
+	/*Public Variables */
 	public GameObject mLectureDetailPrefab;
 	public GameObject mScrollviewContent;
-	private float mYear;
-	private float mSemester;
-	private GameObject[] mSearchedSubjectSet;
+	public Transform mSubjectPrefabTransform;
+	public Text mDebug;
+	public GameObject mLoadSubjectsContent;
+
+	/*Private Variables */
+	private float mYear = 1f;
+	private float mSemester = 1f;
+	private Transform[] mSearchedSubjectSet;
 	private JsonData jsonvale;
 	private int mNumberOfObjects;
+	private bool mIsDeleting = false;
+
 	// Use this for initialization
 	void Start () {
-		mYear = 1f;
-		mSemester = 1f;
-		SearchLectures ();
+		//SearchLectures ();
 	}
 	
 	// Update is called once per frame
@@ -32,37 +40,44 @@ public class HomeScreenLoad : MonoBehaviour {
 		EventManagerBase.OnHomeScreenLoaded -= SearchLectures;
 	}
 
+	/*Called on event trigger. Destroys the old objects and calls LoadLectureDetailsFromServer*/
 	public void SearchLectures()
 	{
-		Debug.Log ("search");
-		mSearchedSubjectSet = GameObject.FindGameObjectsWithTag ("SubjectPrefab");
+			mDebug.text = "Search Lectures";
+			mSearchedSubjectSet = mLoadSubjectsContent.GetComponentsInChildren<Transform> ();
+			mDebug.text += "\n Search gameobjects";
 
-		foreach (GameObject g in mSearchedSubjectSet) 
-		{
-			Destroy (g);
-		}
+			if (mSearchedSubjectSet.Length > 0) 
+			{
+				foreach (Transform g in mSearchedSubjectSet) 
+				{
+					mDebug.text += "\n inside for ech";
+					Destroy (g.gameObject);
+					mDebug.text += "\n destroy";
+				}
+			}
 		StartCoroutine (LoadLectureDetailsFromServer(mYear,mSemester));
+		mDebug.text += "\n load lecs";
 	}
 
+	/*Calls the rest API for lectures at current time*/
 	private IEnumerator LoadLectureDetailsFromServer(float year, float semester)
 	{
 
 		string s = AppCommon.mCommonUrl + "get/getsubjects?year=" + year + "&sem=" + semester;
-		Debug.Log ("asdaa " + s);
 		WWW www = new WWW (s);
 		yield return www;
 
 		if (www.error == null) 
 		{
-			Debug.Log ("No error");
 			if (Processjson (www.text)) 
 			{
-				Debug.Log ("json count "+jsonvale.Count + " var count "+mNumberOfObjects);
 				for(int i = 0; i < mNumberOfObjects; i++)
 				{
-					Debug.Log ("aasdfsdfasd "+jsonvale[i]["sname"].ToString());
 					GameObject newgameobject = Instantiate (mLectureDetailPrefab);
 					newgameobject.transform.parent = mScrollviewContent.transform;
+					newgameobject.transform.localScale = mSubjectPrefabTransform.localScale;
+					newgameobject.transform.localPosition = mSubjectPrefabTransform.localPosition;
 					newgameobject.GetComponent<SearchSubjectPrefabDataLoader> ().SetDetailsOnPrefab (jsonvale[i]["sname"].ToString(),jsonvale[i]["lname"].ToString(),jsonvale[i]["time"].ToString(),jsonvale[i]["location"].ToString(),jsonvale[i]["enrollk"].ToString(),jsonvale[i]["sid"].ToString());
 
 				}
@@ -74,26 +89,27 @@ public class HomeScreenLoad : MonoBehaviour {
 
 	}
 
-	public void OnYearValueChanged(float value)
+	/*Dynamic value change function for dropdown for year selection*/
+	public void OnYearValueChanged(int value)
 	{
-		Debug.Log ("year changed");
-		mYear = value;
+		mYear =(float) (value + 1f);
+		mIsDeleting = true;
 		SearchLectures ();
 	}
 
-	public void OnSemesterValueChanged(float value)
+	/*Dynamic value change function for dropdown for semester selection*/
+	public void OnSemesterValueChanged(int value)
 	{
-		Debug.Log ("semester changed");
-		mSemester = value;
+		mSemester = (float) (value+1f);
 		SearchLectures ();
 	}
 
+	/*Convert json from string to jsonobject*/
 	private bool Processjson(string jsonString)
 	{
 		jsonvale = JsonMapper.ToObject(jsonString);
 		Debug.Log (jsonString);
 		mNumberOfObjects = jsonvale.Count;
 		return true;
-		//TODO
 	}
 }

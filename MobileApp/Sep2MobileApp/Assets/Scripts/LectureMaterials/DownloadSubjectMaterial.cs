@@ -13,6 +13,7 @@ public class DownloadSubjectMaterial : MonoBehaviour {
 	
 	}
 
+	/*Set url value as a private variable*/
 	public void SetUrl(string url,string name)
 	{
 		mUrl = url;

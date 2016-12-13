@@ -7,6 +7,7 @@ public class EventManagerBase : MonoBehaviour {
 	public static event OnEvent OnHomeScreenLoaded;
 	public static event OnEvent OnLectureScreenLoaded;
 	public static event OnEvent OnLectureMaterialsLoaded;
+	public static event OnEvent OnSpotTestLoaded;
 	void Start () {
 	
 	}
@@ -32,5 +33,11 @@ public class EventManagerBase : MonoBehaviour {
 	{
 		if (OnLectureMaterialsLoaded != null)
 			OnLectureMaterialsLoaded ();
+	}
+
+	public void TriggerSpotTestLoaded()
+	{
+		if (OnSpotTestLoaded != null)
+			OnSpotTestLoaded ();
 	}
 }

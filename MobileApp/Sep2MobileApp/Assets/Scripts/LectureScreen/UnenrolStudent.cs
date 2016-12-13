@@ -15,25 +15,23 @@ public class UnenrolStudent : MonoBehaviour {
 	
 	}
 
+	/*Calls method for student unenrolment*/
 	public void UnEnrol()
 	{
 		StartCoroutine (RequestUnenrol ());
 	}
 
+	/*Communicate with server to unenrol student*/
 	private IEnumerator RequestUnenrol()
 	{
 		//TODO unenrol student url change
-		WWWForm form = new WWWForm ();
-		form.AddField ("s_id",AppCommon.mStudentID);
-		form.AddField ("sid",AppCommon.mInstanceID);
-		string url = AppCommon.mCommonUrl + "add/enroll";
-		WWW www = new WWW (url,form);
+		string url = AppCommon.mCommonUrl + "get/unenroll?s_id="+AppCommon.mStudentID;
+		WWW www = new WWW (url);
 		yield return www;
 		mUnenrolMessageGameObject.SetActive (true);
 		if (www.error == null) {
 			mUnenrolMessage.text = "Succesfully Unenrolled from the subject " + AppCommon.mSubjectName;
 			AppCommon.Reset ();
-			yield return new WaitForSeconds (1.5f);
 			GameObject.Find ("ScriptHolder").GetComponent<ScreenManager> ().SetScreen ("Home");
 		}
 		else 

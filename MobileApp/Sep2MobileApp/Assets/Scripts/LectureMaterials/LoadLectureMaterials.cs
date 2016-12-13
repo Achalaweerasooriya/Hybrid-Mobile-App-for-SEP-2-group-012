@@ -3,10 +3,18 @@ using System.Collections;
 using LitJson;
 public class LoadLectureMaterials : MonoBehaviour {
 
+	/*Pivate variables*/
 	private JsonData jsonvale;
 	private int mNumberOfObjects;
+	private Transform[] mSearchedSubjectSet;
+
+	/*Public variables*/
 	public GameObject mLectureMaterialPrefab;
 	public GameObject mScrollviewContent;
+	public Transform mLecturePrefabTransform;
+	public GameObject mLectureMaterialContent;
+
+
 	void OnEnable()
 	{
 		EventManagerBase.OnLectureMaterialsLoaded += LoadMaterials;
@@ -26,32 +34,41 @@ public class LoadLectureMaterials : MonoBehaviour {
 	
 	}
 
+	/*Called on enable to destroy old objects and call the load method*/
 	private void LoadMaterials()
 	{
+		mSearchedSubjectSet = mLectureMaterialContent.GetComponentsInChildren<Transform> ();
+
+		if (mSearchedSubjectSet.Length > 0) 
+		{
+			foreach (Transform g in mSearchedSubjectSet) 
+			{
+				Destroy (g.gameObject);
+			}
+		}
+
 		StartCoroutine (Load ());
 
 	}
 
+	/*Load lecture materials from server*/
 	private IEnumerator Load()
 	{
-		//TODO change url
-		string s = AppCommon.mCommonUrl + "get/getsubjects?year=";
-		Debug.Log ("asdaa " + s);
+		string s = AppCommon.mCommonUrl + "get/smaterial?sid="+AppCommon.mInstanceID+"";
 		WWW www = new WWW (s);
 		yield return www;
 
 		if (www.error == null) 
 		{
-			Debug.Log ("No error");
 			if (Processjson (www.text)) 
 			{
-				Debug.Log ("json count "+jsonvale.Count + " var count "+mNumberOfObjects);
 				for(int i = 0; i < mNumberOfObjects; i++)
 				{
-					Debug.Log ("aasdfsdfasd "+jsonvale[i]["sname"].ToString());
 					GameObject newgameobject = Instantiate (mLectureMaterialPrefab);
 					newgameobject.transform.parent = mScrollviewContent.transform;
-					newgameobject.GetComponent<DownloadSubjectMaterial>().SetUrl(/*ADD JSON DATA HERE*/"","");
+					newgameobject.transform.localScale = mLecturePrefabTransform.localScale;
+					newgameobject.transform.localPosition = mLecturePrefabTransform.localPosition;
+					newgameobject.GetComponent<DownloadSubjectMaterial>().SetUrl(jsonvale[i]["url"].ToString(),jsonvale[i]["mname"].ToString());
 				}
 			}
 		}
@@ -60,11 +77,12 @@ public class LoadLectureMaterials : MonoBehaviour {
 
 	}
 
+	/*Convert string to jsonobject*/
 	private bool Processjson(string jsonString)
 	{
 		jsonvale = JsonMapper.ToObject(jsonString);
-		Debug.Log (jsonString);
 		mNumberOfObjects = jsonvale.Count;
+		Debug.Log (jsonString);
 		return true;
 	}
 }

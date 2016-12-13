@@ -39,8 +39,22 @@ $mdThemingProvider.theme('docs-dark', 'default')
 var global_config ="pc";
 $rootScope.messages_question =[];
 $rootScope.messages_question_count =0;
+ $scope.date = new Date();
+/*
+*
+*gert results
+*
+*/
+$scope.getResults =funtion (){
+
+};
 
 
+/*
+*
+*notify user 
+*
+*/
 var var_1=$interval(function(){
     var datai={sid :  (localStorage.getItem("currentSubjectid")).replace(/\"/g, "")};
    // console.log(datai);
@@ -172,20 +186,20 @@ $scope.userCartList = [];
 *show_stuent_messages
 *
 */
-$scope.show_stuent_messages = function(){  
+$scope.show_stuent_messages = function(x){  
     $scope.load = function(ev) {
       var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
                             $mdDialog.show({
  clickOutsideToClose:false,
                               template: ''+
                               '<md-toolbar md-scroll-shrink>'+
-    '<div class="md-toolbar-tools">New Message From Lisa</div>'+
+    '<div class="md-toolbar-tools">New Question From '+x.username+'</div>'+
   '</md-toolbar>'+
 
-  '<md-content style="height: 300px;" md-theme="altTheme">'+
+  '<md-content style="height: 200px;" md-theme="altTheme">'+
 
    ' <section>'+
-      '<md-subheader class="md-primary">asdasldasldasdasdlasd;asdas;dasldasdlasdasdlasdlas,dalsd,asldasldasdasdasd</md-subheader>'+
+      '<center><md-subheader class="md-primary">'+x.question+'</md-subheader></center>'+
  
                      /*     ' <md-input-container class="md-block" > '+
                             '<label>Search</label>  '+
@@ -193,12 +207,12 @@ $scope.show_stuent_messages = function(){
                          ' </md-input-container>'+ 
                          ' <md-input-container class="md-block" > '+
                           '<center><md-checkbox class="md-secondary" ng-model="select_All" ng-click="SelectAll()">Select All</md-checkbox></center>'+*/
-                         ' </md-input-container>'+
+                       /*  ' </md-input-container>'+
          '<md-input-container class="md-block">'+
           '<label>reply</label>'+
           '<textarea ng-model="user.biography" md-maxlength="150" rows="8" md-select-on-focus></textarea>'+
         '</md-input-container>'+
-        '<md-button class="md-raised md-primary" style="    float:left" ng-click="Savelist()">Reply</md-button>'+
+        '<md-button class="md-raised md-primary" style="    float:left" ng-click="Savelist()">Reply</md-button>'+*/
 /*
       '<md-subheader class="md-primary"> <input type="button"  ng-model="SAVE"> SAVE</md-subheader>'+*/
     '</section>'+
@@ -208,100 +222,42 @@ $scope.show_stuent_messages = function(){
                               controller: function($scope,$mdDialog, $mdMedia,$rootScope,$http,$location) {
 
 
+  var dataeei={question :  x.question };
+   // console.log(datai);
+      $http.post('http://'+global_config+':3000/add/readsquestion', dataeei)
+                    .success(function(data, status, headers, config)
+                    {
+                      //console.log("student test");
+                     // $rootScope.messages_question.push(data);
+                  console.log("read");
+                     // console.log($rootScope.messages_question);
+                     
+                    })
+                    .error(function(data, status, headers, config)
+                    {
+                        console.log('error');
+                    });
 
+
+    var datai={sid :  (localStorage.getItem("currentSubjectid")).replace(/\"/g, "")};
+            $http.post('http://'+global_config+':3000/get/squestion', datai)
+                    .success(function(data, status, headers, config)
+                    {
+                      //console.log("student test");
+                     // $rootScope.messages_question.push(data);
+                     $rootScope.messages_question =data;
+                      $rootScope.messages_question_count = $rootScope.messages_question.length;
+                     // console.log($rootScope.messages_question);
+                     
+                    })
+                    .error(function(data, status, headers, config)
+                    {
+                        console.log('error');
+                    });
 
 $scope.select_All == false;
   var imagePath = 'logo-pd-2.png';
-    $scope.messages = [
-      {
-        face : imagePath,
-        what: 'Basdasdekend?',
-        who: 'Atheek',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Bruwqwnd?',
-        who: 'Nipun',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunwqdwweekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-    ];
+   
 
     $scope.SelectAll =function(){
       var objects = $scope.messages;
@@ -2100,7 +2056,6 @@ $scope.select_All == false;
 
 
 
-
 //quiz function
 
 $rootScope.coount_id_quiz_questionnaire = 0;
@@ -2247,6 +2202,27 @@ var object_question = {
                                                                     console.log('error');
                                                                 });*/
 
+var db_sent_question = {
+  sid    : (localStorage.getItem("currentSubjectid")).replace(/\"/g, ""),
+  question : $rootScope.quill2.root.innerHTML,
+  canswer  : ""+$scope.selected_checkbox,
+  answer1 : list.answer_1,
+  answer2 : list.answer_2,
+  answer3 :list.answer_3,
+  answer4 :list.answer_4
+} 
+
+                        $http.post('http://pc:3000/add/lquestion',db_sent_question)
+                                                                .success(function(data, status, headers, config)
+                                                                {
+                                                                   console.log("question added");
+                                                                  
+
+                                                                })
+                                                                .error(function(data, status, headers, config)
+                                                                {
+                                                                    console.log('error');
+                                                                });
 
                                                                      SweetAlert.swal("Successfully Added!", "", "success");
                                                                      
@@ -2379,10 +2355,10 @@ $rootScope._quiz_show = true;
       '<md-list layout-padding>'+
         '<md-list-item class="md-3-line" ng-repeat="message in messages |filter :searchss">'+
         ' <md-switch class="md-secondary" ng-model="message.enabled"></md-switch>'+
-            '<img ng-src="{{message.face}}" class="md-avatar" alt="{{message.who}}">'+
+            '<img ng-src="./student.png" class="md-avatar" alt="{{message.who}}">'+
             '<div class="md-list-item-text">'+
-              '<h3>{{message.what}}</h3>'+
-              '<h4>{{message.who}}</h4>'+
+              '<h3>{{message.username}}</h3>'+
+              '<h4>{{message.s_id}}</h4>'+
               '<p>'+
                 '{{message.notes}}'+
               '</p>'+
@@ -2453,115 +2429,32 @@ $rootScope.coount_id_quiz_questionnaire=$rootScope.coount_id_quiz_questionnaire+
 
 
 
+    var datai={sid :  (localStorage.getItem("currentSubjectid")).replace(/\"/g, "")};
+   // console.log(datai);
+      $http.post('http://'+global_config+':3000/get/enrolledstudents', datai)
+                    .success(function(data, status, headers, config)
+                    {
+                      $scope.messages = data;
+                     
+                    })
+                    .error(function(data, status, headers, config)
+                    {
+                        console.log('error');
+                    });
 
-
-
-
-$scope.select_All == false;
-  var imagePath = 'logo-pd-2.png';
-    $scope.messages = [
-      {
-        face : imagePath,
-        what: 'Basdasdekend?',
-        who: 'Atheek',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Bruwqwnd?',
-        who: 'Nipun',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunwqdwweekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-      {
-        face : imagePath,
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        enabled : false,
-        notes: " I'll be in your neighborhood doing errands"
-      },
-    ];
 
     $scope.SelectAll =function(){
       var objects = $scope.messages;
 
         for (var i = 0; i < objects.length; i++) {
           if($scope.select_All == false){
-            if (objects[i].enabled === false) {
+            if (objects[i].enabled == "false") {
                 objects[i].enabled = true;
                 
             }
         }
         else{
-        if (objects[i].enabled === true) {
+        if (objects[i].enabled == true) {
                 objects[i].enabled = false;
                 
             }

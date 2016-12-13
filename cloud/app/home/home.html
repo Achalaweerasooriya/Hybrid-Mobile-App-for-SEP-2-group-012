@@ -56,7 +56,7 @@
                         </div>
                         </li> -->
                         <li class="message-preview" ng-repeat="x in messages_question">
-                            <a ng-click="show_stuent_messages()">
+                            <a ng-click="show_stuent_messages(x)">
                                 <div class="media">
                                     <span class="pull-left">
                                         <img class="media-object" src="./student.png" alt="">
@@ -65,29 +65,15 @@
                                     <div ng-if="userDetails.name = undifined"></div>
                                         <h5 class="media-heading"><strong>{{x.username}}</strong>
                                         </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                        <p class="small text-muted"><i class="fa fa-clock-o"></i>    {{date | date:'HH:mm:ss'}}</p>
                                         <p>{{x.question}}</p>
                                     </div>
                                 </div>
                             </a>
                         </li>
-                        <li class="message-preview">
-                            <a href="#!/">
-                                <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><strong>John Smith</strong>
-                                        </h5>
-                                        <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
+                  
                         <li class="message-footer">
-                            <a href="#!/">Read All New Messages</a>
+                            <a href="#!/">Read All Messages</a>
                         </li>
                     </ul>
                 </li>
@@ -674,7 +660,9 @@ Rice <i class="fa fa-fw fa-caret-down"></i></a>
 
 
 <div ng-cloak  ng-show="_quiz_show_answers" style="border: 2px dashed red;" >
-<div ng-cloak  ng-show="_quiz_show_answers_ongoing" ><h3> Ongoing quiz for {{show_ongoing}}</h3></div>
+<div ng-cloak  ng-show="_quiz_show_answers_ongoing" ><h3> Ongoing quiz for {{show_ongoing}}</h3>
+
+ <md-button class="md-raised md-primary" ng-click="getResults()" style="float:right" ><i class="fa fa-newspaper-o" aria-hidden="true"></i>  Get Results </md-button></div>
 <h3>Preview</h3>
   <md-content>
     <md-tabs md-dynamic-height md-border-bottom>

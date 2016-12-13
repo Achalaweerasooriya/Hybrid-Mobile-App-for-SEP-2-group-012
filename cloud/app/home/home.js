@@ -29,7 +29,39 @@ $mdThemingProvider.theme('docs-dark', 'default')
     //flowFactoryProvider.factory = fustyFlowFactory;
 }])
 
-.controller('homeCtrl', function($scope,$mdDialog, $mdMedia,$rootScope,$http,$location,filterFilter,SweetAlert, $sce) {
+.controller('homeCtrl', function($scope,$mdDialog, $mdMedia,$rootScope,$http,$location,filterFilter,SweetAlert, $sce,$interval) {
+
+
+  /*
+  *
+  *chat interval update   'userId': JSON.parse( localStorage.getItem("userId") subject_id : $rootScope.itemForAnnouncement.productId
+  */
+var global_config ="pc";
+$rootScope.messages_question =[];
+$rootScope.messages_question_count =0;
+
+
+var var_1=$interval(function(){
+    var datai={sid :  (localStorage.getItem("currentSubjectid")).replace(/\"/g, "")};
+   // console.log(datai);
+      $http.post('http://'+global_config+':3000/get/squestion', datai)
+                    .success(function(data, status, headers, config)
+                    {
+                      //console.log("student test");
+                     // $rootScope.messages_question.push(data);
+                     $rootScope.messages_question =data;
+                      $rootScope.messages_question_count = $rootScope.messages_question.length;
+                     // console.log($rootScope.messages_question);
+                     
+                    })
+                    .error(function(data, status, headers, config)
+                    {
+                        console.log('error');
+                    });
+},15000);
+
+
+
 
  $scope.questions=[];
 
@@ -134,6 +166,287 @@ $scope.userCartList = [];
                 token : '' 
                                                  };
 
+
+/**
+*
+*show_stuent_messages
+*
+*/
+$scope.show_stuent_messages = function(){  
+    $scope.load = function(ev) {
+      var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
+                            $mdDialog.show({
+ clickOutsideToClose:false,
+                              template: ''+
+                              '<md-toolbar md-scroll-shrink>'+
+    '<div class="md-toolbar-tools">New Message From Lisa</div>'+
+  '</md-toolbar>'+
+
+  '<md-content style="height: 300px;" md-theme="altTheme">'+
+
+   ' <section>'+
+      '<md-subheader class="md-primary">asdasldasldasdasdlasd;asdas;dasldasdlasdasdlasdlas,dalsd,asldasldasdasdasd</md-subheader>'+
+ 
+                     /*     ' <md-input-container class="md-block" > '+
+                            '<label>Search</label>  '+
+                            '<input  ng-model="searchss"> '+
+                         ' </md-input-container>'+ 
+                         ' <md-input-container class="md-block" > '+
+                          '<center><md-checkbox class="md-secondary" ng-model="select_All" ng-click="SelectAll()">Select All</md-checkbox></center>'+*/
+                         ' </md-input-container>'+
+         '<md-input-container class="md-block">'+
+          '<label>reply</label>'+
+          '<textarea ng-model="user.biography" md-maxlength="150" rows="8" md-select-on-focus></textarea>'+
+        '</md-input-container>'+
+        '<md-button class="md-raised md-primary" style="    float:left" ng-click="Savelist()">Reply</md-button>'+
+/*
+      '<md-subheader class="md-primary"> <input type="button"  ng-model="SAVE"> SAVE</md-subheader>'+*/
+    '</section>'+
+
+
+  '</md-content>',
+                              controller: function($scope,$mdDialog, $mdMedia,$rootScope,$http,$location) {
+
+
+
+
+$scope.select_All == false;
+  var imagePath = 'logo-pd-2.png';
+    $scope.messages = [
+      {
+        face : imagePath,
+        what: 'Basdasdekend?',
+        who: 'Atheek',
+        when: '3:08PM',
+        enabled : false,
+        notes: " I'll be in your neighborhood doing errands"
+      },
+      {
+        face : imagePath,
+        what: 'Bruwqwnd?',
+        who: 'Nipun',
+        when: '3:08PM',
+        enabled : false,
+        notes: " I'll be in your neighborhood doing errands"
+      },
+      {
+        face : imagePath,
+        what: 'Brunwqdwweekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        enabled : false,
+        notes: " I'll be in your neighborhood doing errands"
+      },
+      {
+        face : imagePath,
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        enabled : false,
+        notes: " I'll be in your neighborhood doing errands"
+      },
+      {
+        face : imagePath,
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        enabled : false,
+        notes: " I'll be in your neighborhood doing errands"
+      },
+      {
+        face : imagePath,
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        enabled : false,
+        notes: " I'll be in your neighborhood doing errands"
+      },
+      {
+        face : imagePath,
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        enabled : false,
+        notes: " I'll be in your neighborhood doing errands"
+      },
+      {
+        face : imagePath,
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        enabled : false,
+        notes: " I'll be in your neighborhood doing errands"
+      },
+      {
+        face : imagePath,
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        enabled : false,
+        notes: " I'll be in your neighborhood doing errands"
+      },
+      {
+        face : imagePath,
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        enabled : false,
+        notes: " I'll be in your neighborhood doing errands"
+      },
+      {
+        face : imagePath,
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        enabled : false,
+        notes: " I'll be in your neighborhood doing errands"
+      },
+    ];
+
+    $scope.SelectAll =function(){
+      var objects = $scope.messages;
+
+        for (var i = 0; i < objects.length; i++) {
+          if($scope.select_All == false){
+            if (objects[i].enabled === false) {
+                objects[i].enabled = true;
+                
+            }
+        }
+        else{
+        if (objects[i].enabled === true) {
+                objects[i].enabled = false;
+                
+            }
+      }
+      }
+
+    };      
+
+        $scope.Savelist = function() {
+                                                           // console.log($scope.selected);
+                          $rootScope.users_announcements = $scope.messages;    
+                          $rootScope.itemForAnnouncement =item;    
+                           console.log( $rootScope.users_announcements); 
+                           console.log(  $rootScope.itemForAnnouncement);                        
+                              $mdDialog.cancel();
+                        
+
+                                                          };                                              
+                                                         
+                                     /*
+                                            get cart list 
+                                            */
+                                            $scope.loadCartList2=function(){
+                                                var senddata = {
+                                                                        
+                                                                        userId : JSON.parse( localStorage.getItem("userId") )
+                                                                };
+                                               
+                                                $http.post('backend/loadCartList.php',senddata)
+                                                                .success(function(data, status, headers, config)
+                                                                {
+                                                                    $scope.userCartList = data;
+                                                                    console.log(status + ' loadCartList loaded - '  );
+                                                              if($scope.userCartList.validator == "fail"){
+                                                                  //if(data.validator == undefined){
+                                                                    $scope.userCartList=[];
+                                                                     console.log(data);
+                                              
+                                                                  }
+                                                                    else{
+                                                                   
+                                                                  
+                                                                   // console.log(data);
+                                                                    //console.log( $scope.userList.validator);
+                                                                   
+                                                                        //prompt
+                                                                     
+                                                                      }
+                                                                  
+
+                                                                })
+                                                                .error(function(data, status, headers, config)
+                                                                {
+                                                                    console.log('error');
+                                                                });
+
+                                            };
+
+                                            $scope.loadCartList2();
+                                            $scope.check =function(value,model){
+                                              //console.log(value);
+                                             // console.log(model);
+                                              if(value == 'true'){
+                                                //$scope.data.model =true;
+                                                $scope.userListCatergoryChecked.selected[model] = true;
+                                              //  console.log($scope.userListCatergoryChecked.selected[model]);
+                                              }
+
+                                            };
+
+                                         
+                                                         //new
+                                                          $scope.selected = [];
+                                                          $scope.toggle = function (item, list) {
+                                                            var idx = list.indexOf(item);
+                                                            if (idx > -1) {
+                                                              list.splice(idx, 1);
+                                                            }
+                                                            else {
+                                                              list.push(item);
+                                                            }
+                                                          };
+                                                          $scope.exists = function (item, list) {
+                                                            return list.indexOf(item) > -1;
+                                                          };
+                                                          $scope.removeItem = function(index){
+                                                              $scope.selected.splice(index, 1);
+                                                            };
+                                                          $scope.hide = function() {
+                                                              $mdDialog.hide();
+
+                                                          };
+                                                          $scope.skip = function() {
+
+                                                              $mdDialog.cancel();
+
+                                                               $location.path('/');
+
+                                                          };
+                                                          $scope.cancel = function() {
+                                                           // console.log($scope.selected);
+                                                          
+                                                            $mdDialog.cancel();
+                        
+
+                                                          };
+
+                                            },
+                              parent: angular.element(document.body),
+                              clickOutsideToClose:true,
+                              fullscreen: useFullScreen
+                            })
+                            .then(function(answer) {
+                              $scope.status = 'You said the information was "' + answer + '".';
+                            }, function() {
+                              $scope.status = 'You cancelled the dialog.';
+                            });
+                            $scope.$watch(function() {
+                              return $mdMedia('xs') || $mdMedia('sm');
+                            }, function(wantsFullScreen) {
+                              $scope.customFullscreen = (wantsFullScreen === true);
+                            });
+                        
+                            //prompt
+
+         }
+           $scope.load();
+
+};
+  
+
+
 /*
 *
 *
@@ -149,6 +462,11 @@ $scope.userCartList = [];
       // With a custom static string:
 var customHtml = '<div  onMouseOver="this.style.color=\'#D32F2F\'"  onMouseOut="this.style.color=\'#000000\'" style="cursor: pointer;">' +
                  '  <i class="fa fa-trash" aria-hidden="true"></i>   Remove from list</div>';
+var customHtmlActive = '<div  onMouseOver="this.style.color=\'#D32F2F\'"  onMouseOut="this.style.color=\'#000000\'" style="cursor: pointer;">' +
+                 '  <i class="fa fa-play" aria-hidden="true"></i>  Commence Lecture</div>';
+
+var customHtmlConclude = '<div  onMouseOver="this.style.color=\'#D32F2F\'"  onMouseOut="this.style.color=\'#000000\'" style="cursor: pointer;">' +
+                 '  <i class="fa fa-stop" aria-hidden="true"></i>  Conclude Lecture</div>';
 var customHtmlquestionnaire = '<div  onMouseOver="this.style.color=\'#D32F2F\'"  onMouseOut="this.style.color=\'#000000\'" style="cursor: pointer;">' +
                  '  <i class="fa fa-question-circle" aria-hidden="true"></i>   Create a questionnaire</div>';
 var customHtmlShareFile = '<div  onMouseOver="this.style.color=\'#D32F2F\'"  onMouseOut="this.style.color=\'#000000\'" style="cursor: pointer;">' +
@@ -230,7 +548,16 @@ var customItem = {
                        // console.log(status + ' - ' +data );
                         //console.log(data);
                             //prompt
-                          
+
+                            if( localStorage.getItem("currentSubjectid") == item.productId  ){
+          SweetAlert.swal(localStorage.getItem("currentSubjectName") +" Successfully Concluded ", "", "success");  }
+          else{
+            SweetAlert.swal(item.productName +" Successfully Removed ", "", "success");  
+          }              
+      localStorage.setItem("currentSubjectid",JSON.stringify(""));
+      
+      localStorage.setItem("currentSubjectName",JSON.stringify(""));
+
                           
                            $scope.showlist(); 
                          $rootScope.loadCartList();
@@ -286,7 +613,44 @@ var customShare = {
        
         
     }};
+//active lecture
+var customActive = {
+    html: customHtmlActive,
+    enabled: function() {return true},
+    click: function ($itemScope, $event, value,item) {
+       // alert("custom html");
 
+        console.log($itemScope.item);
+        console.log($itemScope.item.productName);
+       $scope.SetLecture($itemScope.item);
+       
+        
+    }};
+
+//conclude lecture 
+
+var customdisable = {
+    html: customHtmlConclude,
+    enabled: function() {return true},
+    click: function ($itemScope, $event, value,item) {
+       // alert("custom html");
+
+        console.log($itemScope.item);
+        console.log($itemScope.item.productName);
+       if(localStorage.getItem("currentSubjectid") == '"'+$itemScope.item.productId+'"' ){
+  localStorage.setItem("currentSubjectid",JSON.stringify(""));
+      
+      localStorage.setItem("currentSubjectName",JSON.stringify(""));
+
+SweetAlert.swal( " Successfully Concluded!", "", "success");
+       }
+       else{
+
+SweetAlert.swal("Please make sure you have Commenced a lecture to conclude ", "", "error");
+       }
+       
+        
+    }};
 // With a custom function returning a string:
 var customItem2 = {
     html: function($itemScope) {
@@ -298,13 +662,19 @@ var customItem2 = {
     }
 };
 
-$scope.otherMenuOptions = [customItem, customQuiz,customShare,customAnnouncement/*,
+$scope.otherMenuOptions = [customActive,customdisable,customItem, customQuiz,customShare,customAnnouncement/*,
     ['Example 1', function ($itemScope, $event, value) {
         alert("Example 1" +value);
     }]*/]
 /*$scope.otherMenuOptions = [
     [function ($itemScope, $event, modelValue, text, $li) {
         return $item.name;
+        productId
+:
+"1"
+productName
+:
+"SPDC"
     }, function ($itemScope, $event) {
         // Action
     }, function($itemScope, $event, modelValue, text, $li) {
@@ -499,8 +869,15 @@ console.log(quantity);
                        // console.log(status + ' - ' +data );
                         //console.log(data);
                             //prompt
-                          
-                          
+                               if( localStorage.getItem("currentSubjectid") == item.productId  ){
+          SweetAlert.swal(localStorage.getItem("currentSubjectName") +" Successfully Concluded ", "", "success");  }
+          else{
+            SweetAlert.swal(item.productName +" Successfully Removed ", "", "success");  
+          }  
+                          localStorage.setItem("currentSubjectid",JSON.stringify(""));
+      
+      localStorage.setItem("currentSubjectName",JSON.stringify(""));
+
                            $scope.showlist(); 
                          $rootScope.loadCartList();
                          $rootScope.loadProductList();
@@ -925,9 +1302,25 @@ $scope.goToRegister = function(){
 
 
 
-
+/*
+*
+*Active lecture
+*
+*/
      
+    $scope.SetLecture=function(item){
+      //SetLecture pproductId prouctName
+    if( localStorage.getItem("currentSubjectid") == '""'  ){
+      localStorage.setItem("currentSubjectid",JSON.stringify(item.productId));
+      
+      localStorage.setItem("currentSubjectName",JSON.stringify(item.productName));
 
+  SweetAlert.swal(item.productName+" Successfully Commenced!", "", "success");
+    }
+    else {
+  SweetAlert.swal("Please conclude the current lecture "+localStorage.getItem("currentSubjectName"), "", "error");
+    }
+    };
 /*
 *
 *share fils
@@ -1912,7 +2305,7 @@ document.getElementById("answer_4").value = '';
                                                                     $scope.checkBodyquiz =false;
                                                                      $rootScope._SelectAnswer= false;
 
-                                                            //var idx = $scope.selected_questions.indexOf(list);
+                                                            //var idx = $scope.selected_questions.indexOf(list);  'userId': JSON.parse( localStorage.getItem("userId") subject_id : $rootScope.itemForAnnouncement.productId)
 
 var senddata ={question :  JSON.stringify($scope.selected_questions) , subject_id : $rootScope.itemForAnnouncement.productId}
                               /*      $http.post('http://pc:3000/add/question',senddata)

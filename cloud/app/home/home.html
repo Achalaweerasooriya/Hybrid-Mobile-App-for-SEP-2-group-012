@@ -18,9 +18,22 @@
            
 
                 <li class="dropdown">
-                    <a href="#!/" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                    <a href="#!/" class="dropdown-toggle" data-toggle="dropdown">
+<span ng-if="messages_question_count>0">
+<span class="fa-stack fa has-badge" data-count={{messages_question_count}}>
+ 
+  <i class="fa fa-bell fa fa-envelope"></i>
+</span>
+</span>
+<span ng-if="messages_question_count==0">
+<span class="fa-stack " >
+ 
+  <i class="fa fa-bell fa fa-envelope"></i>
+</span>
+</span>
+                    <!-- <i class="fa fa-envelope"></i> <b class="caret"> --></b></a>
                     <ul class="dropdown-menu message-dropdown">
-                        <li class="message-preview">
+                       <!--  <li class="message-preview">
                             <div class="panel panel-yellow">
                             <div class="panel-heading">
                                 <div class="row">
@@ -41,19 +54,19 @@
                                 </div>
                             </a>
                         </div>
-                        </li>
-                        <li class="message-preview">
-                            <a href="#!/">
+                        </li> -->
+                        <li class="message-preview" ng-repeat="x in messages_question">
+                            <a ng-click="show_stuent_messages()">
                                 <div class="media">
                                     <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                        <img class="media-object" src="./student.png" alt="">
                                     </span>
                                     <div class="media-body">
                                     <div ng-if="userDetails.name = undifined"></div>
-                                        <h5 class="media-heading"><strong>John Smith</strong>
+                                        <h5 class="media-heading"><strong>{{x.username}}</strong>
                                         </h5>
                                         <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                        <p>{{x.question}}</p>
                                     </div>
                                 </div>
                             </a>
@@ -78,7 +91,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="dropdown">
+            <!--     <li class="dropdown">
                     <a href="#!/" class="dropdown-toggle " data-toggle="dropdown"><i class="fa fa-bell "></i> <b class="caret"></b></a>
                     <ul class="dropdown-menu alert-dropdown">
                         <li>
@@ -104,7 +117,7 @@
                             <a href="#">View All</a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <li class="dropdown">
                     <a  class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-user"></i> {{user.name}}<b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -471,31 +484,6 @@ Rice <i class="fa fa-fw fa-caret-down"></i></a>
     </div>
 </div>
 
-<div ng-cloak  ng-show="_quiz_show_answers" style="border: 2px dashed red;" >
-<div ng-cloak  ng-show="_quiz_show_answers_ongoing" ><h3> Ongoing quiz for {{show_ongoing}}</h3></div>
-<h3>Preview</h3>
-  <md-content>
-    <md-tabs md-dynamic-height md-border-bottom>
-    <span ng-repeat="questions in selected_questions track by $index" >
-      <md-tab label={{questions.questionNo}}  >
-        <md-content class="md-padding">
-          <h1 class="md-display-2">Question {{questions.questionNo}}</h1>
-          <h3>Qustion</h3>
-          <div ng-bind-html="thisCanBeusedInsideNgBindHtml(questions.qustion)"></div>
-<h3>Answers</h3>
-<p>1) {{questions.answers.answer_1}}</p></br>
-<p>2) {{questions.answers.answer_2}}</p></br>
-<p>3) {{questions.answers.answer_3}}</p></br>
-<p>4) {{questions.answers.answer_4}}</p></br>
-
-             </md-content>
-      </md-tab>
-      </span>
-   
-   
-    </md-tabs>
-  </md-content>
-</div>
 
   <!--      _Share_files -->
       <div ng-show="_Share_files_show">
@@ -575,7 +563,7 @@ Rice <i class="fa fa-fw fa-caret-down"></i></a>
 </div>
 
           <div ng-show ="checkBodyAnnouncements" class="alert alert-danger">your body cannot be blank.</div>
-    <md-button class="md-raised md-primary" ng-click="SaveAnnouncement()" ng-disabled='userForm_Announcements.$invalid' ><i class="fa fa-floppy-o" aria-hidden="true"></i> Save </md-button></form>
+    <md-button class="md-raised md-primary" ng-click="SaveAnnouncement()" ng-disabled='userForm_Announcements.$invalid' ><i class="fa fa-floppy-o" aria-hidden="true"></i> Publish </md-button></form>
 
 
 <!-- test         flow-files-submitted="$flow.upload()" --> 
@@ -683,6 +671,33 @@ Rice <i class="fa fa-fw fa-caret-down"></i></a>
    <pagination page="currentPage" max-size="noOfPages" total-items="totalItems" items-per-page="entryLimit"></pagination>
 </div> 
 
+
+
+<div ng-cloak  ng-show="_quiz_show_answers" style="border: 2px dashed red;" >
+<div ng-cloak  ng-show="_quiz_show_answers_ongoing" ><h3> Ongoing quiz for {{show_ongoing}}</h3></div>
+<h3>Preview</h3>
+  <md-content>
+    <md-tabs md-dynamic-height md-border-bottom>
+    <span ng-repeat="questions in selected_questions track by $index" >
+      <md-tab label={{questions.questionNo}}  >
+        <md-content class="md-padding">
+          <h1 class="md-display-2">Question {{questions.questionNo}}</h1>
+          <h3>Qustion</h3>
+          <div ng-bind-html="thisCanBeusedInsideNgBindHtml(questions.qustion)"></div>
+<h3>Answers</h3>
+<p>1) {{questions.answers.answer_1}}</p></br>
+<p>2) {{questions.answers.answer_2}}</p></br>
+<p>3) {{questions.answers.answer_3}}</p></br>
+<p>4) {{questions.answers.answer_4}}</p></br>
+
+             </md-content>
+      </md-tab>
+      </span>
+   
+   
+    </md-tabs>
+  </md-content>
+</div>
 <!--    
       <md-card flex="100" md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" md-theme-watch>
         <md-card-title>

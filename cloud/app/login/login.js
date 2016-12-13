@@ -136,6 +136,10 @@ $scope.login = function(ev) {
                                                  localStorage.setItem("userEmail",JSON.stringify(data.email));
                                                  localStorage.setItem("userToken",JSON.stringify(data.token));
                                                  localStorage.setItem("userName",JSON.stringify(data.name));
+
+      localStorage.setItem("currentSubjectid",JSON.stringify(""));
+            localStorage.setItem("currentSubjectName",JSON.stringify(""));
+
                     /*                               $rootScope.userDetails={
                 name : JSON.parse( localStorage.getItem("userName") ),
                 token : JSON.parse( localStorage.getItem("userToken") )
@@ -425,6 +429,10 @@ $scope.login = function(ev) {
                                                  localStorage.setItem("userEmail",JSON.stringify(data.email));
                                                  localStorage.setItem("userToken",JSON.stringify(data.token));
                                                  localStorage.setItem("userName",JSON.stringify(data.name));
+                                                 
+      localStorage.setItem("currentSubjectid",JSON.stringify(""));
+            localStorage.setItem("currentSubjectName",JSON.stringify(""));
+
                                                  /*  $rootScope.userDetails={
                 name : JSON.parse( localStorage.getItem("userName") ),
                 token : JSON.parse( localStorage.getItem("userToken") )

@@ -30,6 +30,21 @@ footer {
     width: 100%;
 }
 
+.fa-stack[data-count]:after{
+  position:absolute;
+  right:0%;
+  /*top:1%;*/
+  content: attr(data-count);
+  font-size:75%;
+  padding:.6em;
+  border-radius:999px;
+  line-height:.75em;
+  color: white;
+  background:rgba(255,0,0,.85);
+  text-align:center;
+  min-width:1em;
+  font-weight:bold;
+}
 .tabsdemoDynamicHeight md-content {
   background-color: transparent !important; }
   .tabsdemoDynamicHeight md-content md-tabs {
@@ -152,7 +167,7 @@ ul.alert-dropdown {
 @media(min-width:768px) {
     .side-nav {
         position: fixed;
-        top: 51px;
+        top: 58px;
         left: 225px;
         width: 225px;
         margin-left: -225px;
